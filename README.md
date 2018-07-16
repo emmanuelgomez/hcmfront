@@ -7,4 +7,4 @@
 - $ python manage.py startapp yourapp
 
 Inline-style: 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![alt text](https://github.com/emmanuelgomez/hcmfront/blob/master/Entity%20Relationship%20Diagram1.jpg "Logo Title Text 1")
