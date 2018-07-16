@@ -66,7 +66,7 @@ class ReservationMeetingRoom(models.Model):
     supplies = models.ManyToManyField(Input, verbose_name=u'Lista de insumos', help_text=u'Insumos seleccionados para la reservacion.')
 
     def __str__(self):
-        return u'%s %s:%s' % (self.date, self.start_time, self.end_time)
+        return u'Sala: %s Empleado: %s Horario: %s %s:%s' % (self.meeting_room.name, self.employee.name, self.date, self.start_time, self.end_time)
 
     class Meta:
         verbose_name = u'Reservacion'
@@ -90,14 +90,14 @@ class ReservationMeetingRoom(models.Model):
 
     def clean(self):
         if self.end_time <= self.start_time:
-            raise ValidationError('Ending times must after starting times')
+            raise ValidationError('La hora final debe ser mayor que la hora inicial.')
 
-        reservations = ReservationMeetingRoom.objects.filter(day=self.day)
+        reservations = ReservationMeetingRoom.objects.filter(date=self.date)
         if reservations.exists():
             for reservation in reservations:
                 if self.check_overlap(reservation.start_time, reservation.end_time, self.start_time, self.end_time):
                     raise ValidationError(
-                        'There is an overlap with another reservation: ' + str(reservation.day) + ', ' + str(
+                        'Esta reservacion se sobrepone con otra: ' + str(reservation.date) + ', ' + str(
                             reservation.start_time) + '-' + str(reservation.end_time))
 
 

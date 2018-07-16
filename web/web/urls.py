@@ -21,7 +21,8 @@ from hcmfront import views
 urlpatterns = [
     #url(r'^', index),
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'^$', views.post_list),
-    #url(r'^post/(?P<pk>[0-9]+)/$', views.post_detail),
-    url(r'^post/new/$', views.post_new, name='post_new'),
+    url(r'^$', views.index, name='index'),
+    url(r'^update/meetingroomlist$', views.update_meeting_room_list, name='update_meeting_room_list'),
+    url(r'^reservation/new/$', views.reservation_new, name='reservation_new'),
+    url(r'^request/new/$', views.request_new, name='request_new'),
 ]

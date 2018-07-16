@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Nueva Reservacion</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+
+    <script>
+      $(function() {
+           $('#id_meeting_room')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="whatever">Seleccione Cantidad de personas e Insumos</option>')
+            .val('whatever')
+        ;
+        $( ".datepicker" ).datepicker({
+          changeMonth: true,
+          changeYear: true,
+          yearRange: "1900:2012",
+          // You can put more options here.
+
+        });
+        $('.timepicker').timepicker({ timeFormat: 'h:mm' });
+        //id_meeting_room
+          function updateMeetingRoomList() {
+              console.log($("#id_supplies").val());
+            $.ajax({
+                url: "{% url 'update_meeting_room_list' %}",
+                type: "post", //send it through get method
+                data: {
+                    date: $("#id_date").val(),
+                    start_time: $("#id_start_time").val(),
+                    end_time: $("#id_end_time").val(),
+                    amount_people: $("#id_amount_people").val(),
+                    supplies: $("#id_supplies").val(),
+
+                },
+                success: function(response) {
+                    console.log(response)
+                     $('#id_meeting_room')
+                        .find('option')
+                        .remove()
+                        .end()
+        ;
+                    //Do Something
+                    var $dropdown = $("#id_meeting_room");
+                    $.each(response.results, function() {
+                                            console.log(this)
+
+                        $dropdown.append($("<option />").val(this[0]).text(this[1]));
+                    });
+                },
+                error: function(xhr) {
+                //Do Something to handle error
+                }
+            });
+          };
+          $("#id_supplies").on("change", function(event) {
+                 updateMeetingRoomList(this);
+            } );
+      });
+      </script>
+{% endblock %}

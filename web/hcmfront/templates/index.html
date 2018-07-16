@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <a href="{% url 'reservation_new' %}" class="top-menu">Agregar una solicitud<span class="glyphicon glyphicon-plus"></span></a>
+        <a href="{% url 'request_new' %}" class="top-menu">Agregar una peticion<span class="glyphicon glyphicon-plus"></span></a>
+        <a href="{% url 'admin:index' %}" class="top-menu">Admin Site<span class="glyphicon glyphicon-plus"></span></a>
+
+{% endblock %}
